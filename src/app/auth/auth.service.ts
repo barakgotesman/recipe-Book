@@ -1,12 +1,12 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, tap } from "rxjs/operators";
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from "./user.model";
 
 export interface AuthResponseData {
     kind: string;
-    idToekn: string;
+    idToken: string;
     email: string;
     refreshToken: string;
     expiresIn: string;
@@ -17,7 +17,7 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService 
 {
-    user = new Subject<User>();
+    user = new BehaviorSubject<User>(null);
 
     constructor(private http: HttpClient) { }
 
@@ -26,7 +26,7 @@ export class AuthService
             {
                 email: email,
                 password: password,
-                returnSecureToekn: true
+                returnSecureToken: true
             }
         )
             .pipe(catchError(this.handleError),
@@ -34,7 +34,7 @@ export class AuthService
                     this.handleAuthentication(
                         resData.email,
                         resData.localId,
-                        resData.idToekn,
+                        resData.idToken,
                         +resData.expiresIn
                     );
                 })
@@ -46,14 +46,14 @@ export class AuthService
             {
                 email: email,
                 password: password,
-                returnSecureToekn: true
+                returnSecureToken: true
             }
         )
             .pipe(catchError(this.handleError), tap(resData => {
                 this.handleAuthentication(
                     resData.email,
                     resData.localId,
-                    resData.idToekn,
+                    resData.idToken,
                     +resData.expiresIn
                 );
             })
@@ -75,6 +75,7 @@ export class AuthService
             expirationDate
         );
         this.user.next(user);
+        console.log("user",user)
 
     }
 
