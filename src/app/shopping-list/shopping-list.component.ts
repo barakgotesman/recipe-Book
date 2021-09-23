@@ -16,7 +16,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   constructor(
     private slService: ShoppingListService,
-    private loggingService: LoggingService,
     private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>
   ) { }
 
@@ -29,7 +28,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     //   }
     // );
 
-    this.loggingService.printLog('hello from ShoppingListComponent ngOnInt!!')
   }
 
   onEditItem(index: number) {
