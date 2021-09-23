@@ -1,0 +1,23 @@
+import { Action } from "@ngrx/store";
+
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+
+export class Login implements Action {
+    readonly type = LOGIN;
+
+    constructor(
+        public payload: {
+        email: string;
+        userId: string;
+        string; token: string;
+        expirationDate: Date;
+    }
+    ) { }
+}
+
+export class Lougout implements Action{
+    readonly type = LOGOUT;
+}
+
+export type AuthActions = Login | Lougout;
