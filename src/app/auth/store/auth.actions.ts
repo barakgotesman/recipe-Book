@@ -10,7 +10,7 @@ export class Login implements Action {
         public payload: {
         email: string;
         userId: string;
-        string; token: string;
+        token: string;
         expirationDate: Date;
     }
     ) { }
